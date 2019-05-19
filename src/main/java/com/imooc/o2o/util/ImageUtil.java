@@ -16,14 +16,15 @@ public class ImageUtil {
     private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
     private static final Random r = new Random();
 
-    public static String generateThumbnail(CommonsMultipartFile thumbnail, String targetAddr){
+    //处理缩略图，并返回新生成的图片的相对值路径
+    public static String generateThumbnail(File thumbnail, String targetAddr){
         String realFileName = getRandomFileName();
         String extension = getFileExtension(thumbnail);
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr + realFileName + extension;
-        File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
+        File dest = new File(PathUtil.getImgBasePath()+ "/" + relativeAddr);
         try{
-            Thumbnails.of(thumbnail.getInputStream()).size(200, 200)
+            Thumbnails.of(thumbnail).size(200, 200)
                     .watermark(Positions.BOTTOM_RIGHT,
                             ImageIO.read(new File(basePath + "/watermark.png")),0.25f)
                     .outputQuality(0.8f).toFile(dest);
@@ -35,7 +36,7 @@ public class ImageUtil {
 
     //创建目标路径所涉及的目录
     private static void makeDirPath(String targetAddr) {
-        String realFileParentPath = PathUtil.getImgBasePath() + targetAddr;
+        String realFileParentPath = PathUtil.getImgBasePath() + "/" + targetAddr;
         File dirPath = new File(realFileParentPath);
         if (!dirPath.exists()) {
             dirPath.mkdirs();
@@ -44,8 +45,8 @@ public class ImageUtil {
     }
 
     //获取输入文件流的扩展名
-    private static String getFileExtension(CommonsMultipartFile cFile) {
-        String originalFileName = cFile.getOriginalFilename();
+    private static String getFileExtension(File cFile) {
+        String originalFileName = cFile.getName();
         return originalFileName.substring(originalFileName.lastIndexOf("."));
     }
 
