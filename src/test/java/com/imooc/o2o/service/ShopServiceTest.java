@@ -37,7 +37,7 @@ public class ShopServiceTest extends BaseTest {
         shop.setPhone("test1");
         shop.setAdvice("审核中");
 
-        File shopImg = new File("/Users/mac/Documents/xiaohuangren.jpg");
+        File shopImg = new File("C:/workspace/image/xiaohuangren.jpg");
         ShopExecution se = shopService.addShop(shop, shopImg);
         Assert.assertEquals(ShopStateEnum.CHECK.getState(), se.getState());
 

@@ -6,7 +6,7 @@ public class PathUtil {
         String os = System.getProperty("os.name");
         String basePath = "";
         if (os.toLowerCase().startsWith("win")){
-            basePath = "D:/projectdev/image";
+            basePath = "C:/workspace/image";
         }else {
             basePath = "/Users/mac/Documents";
         }
